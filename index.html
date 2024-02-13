@@ -27,6 +27,30 @@ function setup() {
   // Create a canvas that fills the window
   createCanvas(windowWidth, windowHeight);
   frameRate(30);
+  // Detect if the device is likely a mobile device
+  isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  
+  // Create the button with a simple label
+  let buttonText = isMobile ? 'Tap' : 'Click';
+  button = createButton(buttonText);
+  
+  // Calculate position to center the button
+  let buttonSize = 100; // Fixed size for circular shape
+  button.position(width / 2 - buttonSize / 2, height / 2 - buttonSize / 2);
+  
+  // Style the button
+  button.style('width', `${buttonSize}px`);
+  button.style('height', `${buttonSize}px`);
+  button.style('border-radius', '50%'); // Make it circular
+  button.style('font-size', '18px');
+  button.style('line-height', `${buttonSize}px`); // Vertically center the text
+  button.style('text-align', 'center');
+  button.style('background-color', '#FF6347'); // Using Tomato color for elegance
+  button.style('color', 'white');
+  button.style('border', '2px solid #FFFFFF'); // White border
+  button.style('box-shadow', '0 4px 8px rgba(0, 0, 0, 0.2)'); // Subtle shadow for depth
+  button.mousePressed(removeButton);
+  button.touchStarted(removeButton); // For mobile devices
 }
 
 function draw() {
@@ -61,6 +85,11 @@ function addHearts(x, y) {
   for (let i = 0; i < 5; i++) {
     hearts.push(new Heart(x, y));
   }
+}
+
+// Remove the button and disable its event listeners
+function removeButton() {
+  button.remove();
 }
 
 // Heart class
